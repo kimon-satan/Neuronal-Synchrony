@@ -1,14 +1,15 @@
+
 var express = require("express"),
-    app = express(),
-    bodyParser = require('body-parser')
-    errorHandler = require('errorhandler'),
-    methodOverride = require('method-override'),
-    port = 4567;
+app = express(),
+bodyParser = require('body-parser')
+errorHandler = require('errorhandler'),
+methodOverride = require('method-override'),
+port = 8080;
 
 app.get("/", function (req, res) {
   res.redirect("/index.html");
 });
-
+ 
 app.use(methodOverride());
 app.use(bodyParser());
 app.use(express.static(__dirname));
@@ -16,47 +17,53 @@ app.use(errorHandler({
   dumpExceptions: true,
   showStack: true
 }));
+ 
 
-app.listen(port);
+var server = require('http').Server(app);
+var io     = require('socket.io')(server);
+var oscListener = require('./utils/oscListener.js');
 
-
-console.log("oscReciever");
-
-var osc = require ('osc-min');
-var dgram = require ('dgram');
-var outSock = dgram.createSocket('udp4');
-var outport = 41234;
-var inport = 66666;
+var sockets = [];
+var devices = [];
 
 
-var sock = dgram.createSocket("udp4", function(msg, rinfo) {
-  var error;
 
-  try {
-    return console.log(osc.fromBuffer(msg));
-  } catch (_error) {
-    error = _error;
-    return console.log("invalid OSC packet");
-  }
+io.sockets.on('connection', function (socket) {
+
+  socket
+    .on('start', function(resp) {
+      console.log('start' + resp.x + ', ' + resp.y);
+
+    })
+    .on('end', function(resp) {
+      console.log('end' + resp.x + ', ' + resp.y);
+
+    });
+
+  sockets.push(socket);
+
 });
 
-sock.bind(inport);
+server.listen(port);
 
-
-var sendHeartbeat = function () {
-  var buf;
-  buf = osc.toBuffer({
-    address: "/heartbeat",
-    args: [
-      12, "sttttring", new Buffer("beat"), {
-        type: "integer",
-        value: 7
-      }
-    ]
+oscListener.on('press', function(x,y){
+ 
+  console.log(x + "," + y );
+  eachSocket(function(socket, i) {
+      console.log(x + "," +  y);
+      socket.emit('press', { x: x, y: y, s: 1 });
   });
-  return outSock.send(buf, 0, buf.length, inport, "localhost");
-};
+
+});
 
 
-setInterval(sendHeartbeat, 2000);
 
+var stdin = process.openStdin();
+
+
+function eachSocket(func) {
+  for (var i = 0; i < sockets.length; i++) {
+    var socket = sockets[i];
+    func(socket, i);
+  }
+}

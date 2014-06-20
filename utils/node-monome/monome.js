@@ -15,3 +15,4 @@ exports.config = handler.config;
 // exported for tests, shouldn't be used directly
 exports.discoverDevice = handler.discoverDevice;
 exports.createDevice = handler.createDevice;
+

@@ -1,9 +1,4 @@
 
-function callMe(){
-
-  console.log("heya");
-
-}
 
 $(function() {
 

@@ -34,10 +34,11 @@ var eventsEmitter = new events.EventEmitter();
 function on(event, callback) {
   eventsEmitter.on(event, callback);
 };
+
 exports.on = on;
 
 // emits deviceFound(device) and deviceLost(device)
-function discover() {
+/*function discover() {
   if (browser !== null) return;
   browser = mdns.createBrowser(mdns.udp('monome-osc'));
   browser.on('serviceUp', function serviceUp(service) {
@@ -59,8 +60,8 @@ function discover() {
     }
   });
   browser.start();
-}
-exports.discover = discover;
+}*/
+//exports.discover = discover;
 
 // supported options:
 //   listenHost: '127.0.0.1'
@@ -69,17 +70,17 @@ function config(opts) {
     options[key] = opts[key];
   }
 }
-exports.config = config;
+//exports.config = config;
 
 // send an osc message to the host/port
 // generally used for setting led state in serialosc
-function oscOut(host, port, args) {
+/*function oscOut(host, port, args) {
   var key = host + ':' + port;
   if (!oscClients[key]) {
     oscClients[key] = new osc.Client(host, port);
   }
   oscClients[key].send.apply(oscClients[key], args);
-}
+}*/
 
 // start an osc server
 // callback will receive the msg as its first argument
@@ -98,12 +99,15 @@ function oscServer(port, callback) {
 
 oscServer(12345, function(msg){
 
-  console.log(msg);
+  eventsEmitter.emit('press',msg[2][1],msg[2][2]);
+ 
   
 });
 
+
 // create a device that represents one monome
-var nextId = 1;
+//var nextId = 1;
+/*
 function createDevice() {
   var device = {
     id: nextId,
@@ -270,4 +274,4 @@ function disableDevice(device) {
 // get device by service name
 function getDevice(service) {
   return devices[service.name];
-}
+}*/
