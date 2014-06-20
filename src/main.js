@@ -3,44 +3,46 @@
 $(function() {
 
   var socket = io.connect('http://localhost');
+  var indices = [];
+  var oscId = 0;
 
-/*socket
--          .on('connected', function(name) {
--            console.log('connected to', name);
--          })
--          .on('press', function (data) {
--
--            var index = data.x;
--            var on = data.s > 0;
--            var isColor = data.y == 7;
--
--            if (on) {
--              var o = animations.map[data.x + ',' + data.y];
--              if (o && !o.playing()) {
--                socket.emit('start', data);
--                o.start(function() {
--                  if (isColor) {
--                    _.each(_.range(16), function(i) {
--                      socket.emit('end', {
--                        x: i,
--                        y: 7
--                      });
--                    });
--                  } else {
--                    socket.emit('end', data);
--                  }
--                });
--              }
--            }
-});*/
+  for(var i = 0; i < 10; i++){
+    indices.push('0,' + i);
+  }
+  for(var i = 0; i < 9; i++){
+    indices.push('1,' + i);
+  }
+  for(var i = 0; i < 7; i++){
+    indices.push('2,' + i);
+  }
+  indices.push('3,0');
+
+  socket.on('press', function (data) {
+
+    console.log(data);
+    
+    if(data.oscId != oscId)return; //ignore messages not intended for you
+
+    var index = indices[data.index];
+
+    trigger(index);
+    triggered();
+
+  });
 
 
 
-var container = $('#content'), $window, ui, buttons, width, height,
-landscape, $hint = $('#hint'), $credits = $('#credits'),
-mouse = new Two.Vector(), $embed = $('#embed'), embedding = false,
-interacting = false, $merchandise = $('#merchandise'),
-merchandising = false;
+  var container = $('#content'), $window, ui, buttons, width, height,
+  landscape, $hint = $('#hint'), $credits = $('#credits'),
+  mouse = new Two.Vector(), $embed = $('#embed'), embedding = false,
+  interacting = false, $merchandise = $('#merchandise'),
+  merchandising = false;
+
+  $('#oscId').on('click', function(){
+    
+    oscId = parseInt($('#oscId').val());
+    console.log(oscId);
+  });
 
 /**
 * Append Sound Generation to Animations

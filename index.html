@@ -49,6 +49,10 @@
       Patatap is a portable animation and sound kit. With the touch of a finger create melodies charged with moving shapes. Warning: contains flashing images.
     </h1>
     <div id="credits" style="display: none;">
+         <div>
+        <lable>Id</lable> 
+          <input type="number" id ="oscId" value="0">
+        </div>
       <ul>
         <li>
           <a href="http://patatap.com" target="_blank" style="border-bottom: 0;"><strong>Patatap</strong></a>
@@ -84,6 +88,7 @@
         <div class="vimeo">
           <iframe src="//player.vimeo.com/video/95057507?title=0&amp;byline=0&amp;portrait=0&amp;color=e34d73" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
         </div>
+     
         <ul>
           <li class="music">
             <iframe style="border: 0; width: 170px; height: 312px;" src="http://bandcamp.com/EmbeddedPlayer/album=2161956980/size=large/bgcol=ffffff/linkcol=333333/tracklist=false/transparent=true/" seamless><a href="http://lullatone.bandcamp.com/album/soundtracks-for-everyday-adventures">Soundtracks for Everyday Adventures by Lullatone</a></iframe>
@@ -134,7 +139,8 @@
           </li>
         </ul>
         <!-- Insert iOS App Store Button here -->
-        <a class="ios-app-store" href="https://itunes.apple.com/us/app/patatap/id880626868?ls=1&mt=8" target="_blank"></a>
+        <!--<a class="ios-app-store" href="https://itunes.apple.com/us/app/patatap/id880626868?ls=1&mt=8" target="_blank"></a>-->
+
       </div>
     </div>
     <div id="lobby">
@@ -174,16 +180,8 @@
       <script src="src/sound.js"></script>
       <script src="src/animations.js"></script>
       <script src="src/main.js"></script>
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      <script src="/socket.io/socket.io.js"></script>
 
-        ga('create', 'UA-48525045-1', 'patatap.com');
-        ga('send', 'pageview');
-
-      </script>
     </div>
   </body>
 </html>

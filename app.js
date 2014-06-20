@@ -46,12 +46,10 @@ io.sockets.on('connection', function (socket) {
 
 server.listen(port);
 
-oscListener.on('press', function(x,y){
+oscListener.on('press', function(oscId, index){
  
-  console.log(x + "," + y );
   eachSocket(function(socket, i) {
-      console.log(x + "," +  y);
-      socket.emit('press', { x: x, y: y, s: 1 });
+      socket.emit('press', { oscId: oscId, index: index });
   });
 
 });
