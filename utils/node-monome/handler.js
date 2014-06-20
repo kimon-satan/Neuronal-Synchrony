@@ -7,6 +7,8 @@ var options = {
   listenHost: '127.0.0.1'
 };
 
+
+ console.log("Handler started");
 // mdns browser
 var browser = null;
 
@@ -74,7 +76,9 @@ exports.config = config;
 // send an osc message to the host/port
 // generally used for setting led state in serialosc
 function oscOut(host, port, args) {
+
   var key = host + ':' + port;
+
   if (!oscClients[key]) {
     oscClients[key] = new osc.Client(host, port);
   }

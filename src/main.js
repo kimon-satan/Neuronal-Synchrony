@@ -1,3 +1,10 @@
+
+function callMe(){
+
+  console.log("heya");
+
+}
+
 $(function() {
 
   var container = $('#content'), $window, ui, buttons, width, height,
@@ -11,7 +18,7 @@ $(function() {
    */
 
   var letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-  var path = '/assets/', filetype = '.mp3';
+  var path = 'assets/', filetype = '.mp3';
   var asset_count = 0, $loaded = $('#loaded');
 
   if (url.boolean('kiosk')) {
@@ -22,7 +29,7 @@ $(function() {
 
   var soundsBuffered = _.after(26 * letters.length, function() {
     if (url.loop && url.loop.match(/(clap|groove)/ig)) {
-      new Sound('/assets/' + url.loop.replace(/\//ig, '') + '-loop' + filetype, function() {
+      new Sound('assets/' + url.loop.replace(/\//ig, '') + '-loop' + filetype, function() {
         this.play({
           loop: true
         });
